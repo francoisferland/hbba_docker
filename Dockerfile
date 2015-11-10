@@ -50,3 +50,7 @@ RUN git clone --branch master https://github.com/francoisferland/HBBA.git /hbba_
 COPY hbba_env.sh /hbba_env.sh
 RUN /hbba_env.sh catkin_make -C /hbba_ws
 
+# Base nodes (just for testing, for now)
+
+ENTRYPOINT ["/hbba_env.sh"]
+#CMD ["bash"]
