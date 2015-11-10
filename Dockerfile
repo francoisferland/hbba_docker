@@ -49,3 +49,7 @@ RUN cd /hbba_ws/src/hbba; git submodule init; git submodule update
 COPY hbba_env.sh /hbba_env.sh
 RUN sync; /hbba_env.sh catkin_make -C /hbba_ws
 
+# Base nodes (just for testing, for now)
+
+ENTRYPOINT ["/hbba_env.sh"]
+#CMD ["bash"]
