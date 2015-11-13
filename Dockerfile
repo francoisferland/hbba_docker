@@ -32,7 +32,6 @@ RUN apt-get install -y patch
 RUN apt-get install -y help2man
 RUN apt-get install -y libyaml-cpp-dev
 
-
 # For ENSTA proxy (again):
 RUN echo "http-proxy-host = proxy.ensta.fr" | cat >> /etc/subversion/servers
 RUN echo "http-proxy-port = 8080" | cat >> /etc/subversion/servers
@@ -41,14 +40,14 @@ RUN echo "http-proxy-port = 8080" | cat >> /etc/subversion/servers
 RUN mkdir -p /hbba_ws/src
 RUN cd /hbba_ws/src; /ros_entrypoint.sh catkin_init_workspace
 # Needed to generate the correct environment setup file
-RUN /ros_entrypoint.sh catkin_make -C /hbba_ws
+RUN sync; /ros_entrypoint.sh catkin_make -C /hbba_ws
 # Will eventually clone a specific tag
-RUN git clone --branch master https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
-
+RUN git clone --branch base_split https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
+RUN cd /hbba_ws/src/hbba; git submodule init; git submodule update
 
 # Building, can take a while because of or-tools
 COPY hbba_env.sh /hbba_env.sh
-RUN /hbba_env.sh catkin_make -C /hbba_ws
+RUN sync; /hbba_env.sh catkin_make -C /hbba_ws
 
 # Base nodes (just for testing, for now)
 
