@@ -39,10 +39,13 @@ RUN git clone --branch base_split https://github.com/francoisferland/HBBA.git /h
 RUN cd /hbba_ws/src/hbba; git submodule init; git submodule update
 
 # Building, can take a while because of or-tools
-COPY hbba_env.sh /hbba_env.sh
-RUN sync; /hbba_env.sh catkin_make -C /hbba_ws
+COPY build_env.sh /build_env.sh
+RUN sync; /build_env.sh catkin_make -C /hbba_ws
 
-# Base nodes (just for testing, for now)
+# Run environment (almost the same as build, plus hostname and ROS master
+# setup).
+COPY hbba_env.sh /hbba_env.sh
+RUN sync
 
 ENTRYPOINT ["/hbba_env.sh"]
 #CMD ["bash"]
