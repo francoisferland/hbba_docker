@@ -1,8 +1,8 @@
 # Docker image for HBBA and ROS Indigo
 FROM ros:indigo
 
-#ENV http_proxy  http://147.250.1.2:8080/
-#ENV https_proxy https://147.250.1.2:8080/
+ENV http_proxy  http://147.250.1.2:8080/
+ENV https_proxy https://147.250.1.2:8080/
 
 # To suppress error messages about the lack of term:
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -33,8 +33,8 @@ RUN apt-get install -y help2man
 RUN apt-get install -y libyaml-cpp-dev
 
 # For ENSTA proxy (again):
-#RUN echo "http-proxy-host = proxy.ensta.fr" | cat >> /etc/subversion/servers
-#RUN echo "http-proxy-port = 8080" | cat >> /etc/subversion/servers
+RUN echo "http-proxy-host = proxy.ensta.fr" | cat >> /etc/subversion/servers
+RUN echo "http-proxy-port = 8080" | cat >> /etc/subversion/servers
 
 # ROS Workspace setup for HBBA build
 RUN mkdir -p /hbba_ws/src
