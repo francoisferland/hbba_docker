@@ -10,6 +10,6 @@ manager.
 The image is available on Docker Hub as francoisferland/hbba.
 To obtain it, just use:
 
-    docker pull francoisferland/docker
+    docker pull francoisferland/hbba
 
 To re-build, use the build_docker.sh script.
