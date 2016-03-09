@@ -1,6 +1,13 @@
 Docker config for HBBA running on ROS Indigo / Ubuntu 14.04.
 
-To get a pre-built image, just use:
+On Ubuntu, Docker can be installed with:
+
+    sudo apt-get install docker.io
+
+You then need to add your user to the 'docker' group to access the container
+manager.
+
+To get a pre-built image of HBBA, just use:
 
   docker pull francoisferland/hbba
 
