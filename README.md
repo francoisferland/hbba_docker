@@ -19,5 +19,5 @@ hbba_synth for tools on how to generate these configurations).
 The script runs the container on the same network as the docker host, and relay
 the ROS_MASTER_URI content so the nodes know where to connect.
 
-To build locally, use the build_docker.sh script.
-
+If you need to build it locally (which is optional), use the build_docker.sh
+script.
