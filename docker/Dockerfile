@@ -41,7 +41,6 @@ RUN cd /hbba_ws/src; /ros_entrypoint.sh catkin_init_workspace
 # Needed to generate the correct environment setup file
 RUN sync; /ros_entrypoint.sh catkin_make -C /hbba_ws
 # Will eventually clone a specific tag
-RUN echo asdfadf
 RUN git clone --branch iwo_addons https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
 RUN cd /hbba_ws/src/hbba; git submodule init; git submodule update
 
