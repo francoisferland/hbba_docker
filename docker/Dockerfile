@@ -24,13 +24,12 @@ RUN apt-get update && apt-get install -y \
     subversion          \
     texinfo             \
     texlive             \
-    zlib1g-dev          
-
-# Additional deps (to avoid re-running the above):
-RUN apt-get install -y ros-indigo-tf
-RUN apt-get install -y patch
-RUN apt-get install -y help2man
-RUN apt-get install -y libyaml-cpp-dev
+    zlib1g-dev          \
+    ros-indigo-tf       \
+    patch               \
+    help2man            \
+    libyaml-cpp-dev     \
+    ros-indigo-move-base-msgs
 
 # For ENSTA proxy (again):
 RUN echo "http-proxy-host = proxy.ensta.fr" | cat >> /etc/subversion/servers
@@ -42,7 +41,8 @@ RUN cd /hbba_ws/src; /ros_entrypoint.sh catkin_init_workspace
 # Needed to generate the correct environment setup file
 RUN sync; /ros_entrypoint.sh catkin_make -C /hbba_ws
 # Will eventually clone a specific tag
-RUN git clone --branch base_split https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
+RUN echo asdfadf
+RUN git clone --branch iwo_addons https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
 RUN cd /hbba_ws/src/hbba; git submodule init; git submodule update
 
 # Building, can take a while because of or-tools
