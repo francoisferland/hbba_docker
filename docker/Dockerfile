@@ -37,16 +37,16 @@ RUN echo "http-proxy-port = 8080" | cat >> /etc/subversion/servers
 
 # ROS Workspace setup for HBBA build
 RUN mkdir -p /hbba_ws/src
-RUN cd /hbba_ws/src; /ros_entrypoint.sh catkin_init_workspace
-# Needed to generate the correct environment setup file
-RUN sync; /ros_entrypoint.sh catkin_make -C /hbba_ws
 # Will eventually clone a specific tag
 RUN git clone https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
-RUN cd /hbba_ws/src/hbba; git submodule init; git submodule update
+RUN sync; cd /hbba_ws/src/hbba; git submodule init; git submodule update
+RUN cd /hbba_ws/src; /ros_entrypoint.sh catkin_init_workspace
 
 # Building, can take a while because of or-tools
 COPY build_env.sh /build_env.sh
-RUN sync; /build_env.sh catkin_make -C /hbba_ws
+# Bootstrapping:
+RUN sync; /ros_entrypoint.sh catkin_make -C /hbba_ws --pkg hbba_synth
+RUN sync; /build_env.sh catkin_make -C /hbba_ws 
 
 # Run environment (almost the same as build, plus hostname and ROS master
 # setup).
