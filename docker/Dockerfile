@@ -1,8 +1,8 @@
 # Docker image for HBBA and ROS Indigo
 FROM ros:indigo
 
-ENV http_proxy  http://147.250.1.2:8080/
-ENV https_proxy https://147.250.1.2:8080/
+# ENV http_proxy  http://147.250.1.2:8080/
+# ENV https_proxy https://147.250.1.2:8080/
 
 # To suppress error messages about the lack of term:
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -41,7 +41,7 @@ RUN cd /hbba_ws/src; /ros_entrypoint.sh catkin_init_workspace
 # Needed to generate the correct environment setup file
 RUN sync; /ros_entrypoint.sh catkin_make -C /hbba_ws
 # Will eventually clone a specific tag
-RUN git clone --branch iwo_addons https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
+RUN git clone https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
 RUN cd /hbba_ws/src/hbba; git submodule init; git submodule update
 
 # Building, can take a while because of or-tools
