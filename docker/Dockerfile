@@ -31,14 +31,19 @@ RUN apt-get update && apt-get install -y \
     libyaml-cpp-dev     \
     ros-indigo-move-base-msgs
 
+RUN apt-get install unzip
+
 # For ENSTA proxy (again):
-RUN echo "http-proxy-host = proxy.ensta.fr" | cat >> /etc/subversion/servers
-RUN echo "http-proxy-port = 8080" | cat >> /etc/subversion/servers
+# RUN echo "http-proxy-host = proxy.ensta.fr" | cat >> /etc/subversion/servers
+# RUN echo "http-proxy-port = 8080" | cat >> /etc/subversion/servers
 
 # ROS Workspace setup for HBBA build
+#
+RUN ls
 RUN mkdir -p /hbba_ws/src
+RUN git config --global http.sslVerify false
 # Will eventually clone a specific tag
-RUN git clone https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
+RUN git clone -b or-tools-upgrade https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
 RUN sync; cd /hbba_ws/src/hbba; git submodule init; git submodule update
 RUN cd /hbba_ws/src; /ros_entrypoint.sh catkin_init_workspace
 
