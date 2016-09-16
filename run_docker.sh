@@ -14,4 +14,4 @@ if [[ $ROS_HOSTNAME == "" ]]; then
     ROS_HOSTNAME=$(hostname)
 fi
     
-docker run --net host -e ROS_HOSTNAME=$ROS_HOSTNAME -e ROS_MASTER_URI=$ROS_MASTER_URI francoisferland/hbba roslaunch hbba_synth base_nodes_r2.launch
+docker run --net host -e ROS_HOSTNAME=$ROS_HOSTNAME -e ROS_MASTER_URI=$ROS_MASTER_URI francoisferland/hbba:ortools-latest roslaunch hbba_synth base_nodes_r2.launch
