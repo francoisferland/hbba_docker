@@ -42,7 +42,7 @@ RUN ls
 RUN mkdir -p /hbba_ws/src
 RUN git config --global http.sslVerify false
 # Will eventually clone a specific tag
-RUN git clone https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
+RUN git clone -b se_plugins https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
 RUN sync; cd /hbba_ws/src/hbba; git submodule init; git submodule update
 RUN cd /hbba_ws/src; /ros_entrypoint.sh catkin_init_workspace
 
