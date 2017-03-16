@@ -9,26 +9,27 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 
 # Dependencies for or-tools and HBBA:
 RUN apt-get update && apt-get install -y \
-    autoconf            \
+#    autoconf            \
     bison               \
     curl                \
+    wget                \
     flex                \
     g++                 \
-    gawk                \
-    gettext             \
-    libtool             \
+#    gawk                \
+#    gettext             \
+#    libtool             \
     libv8-dev           \
-    make                \
+#    make                \
     python-dev          \
     python-setuptools   \
-    subversion          \
-    texinfo             \
-    texlive             \
-    unzip               \
-    zlib1g-dev          \
+#    subversion          \
+#    texinfo             \
+#    texlive             \
+#    unzip               \
+#    zlib1g-dev          \
     ros-indigo-tf       \
-    patch               \
-    help2man            \
+#    patch               \
+#    help2man            \
     libyaml-cpp-dev     \
     ros-indigo-move-base-msgs
 
@@ -38,13 +39,14 @@ RUN apt-get update && apt-get install -y \
 
 # ROS Workspace setup for HBBA build
 #
-RUN ls
 RUN mkdir -p /hbba_ws/src
 RUN git config --global http.sslVerify false
 # Will eventually clone a specific tag
 RUN git clone https://github.com/francoisferland/HBBA.git /hbba_ws/src/hbba
+RUN sync; cd /hbba_ws/src/hbba; git checkout ortools_dep;
 RUN sync; cd /hbba_ws/src/hbba; git submodule init; git submodule update
 RUN cd /hbba_ws/src; /ros_entrypoint.sh catkin_init_workspace
+RUN cd /hbba_ws/src/hbba/iw_translator/or_tools; ./generate_dpkg.sh; dpkg -i or-tools_5.1.4047-1.deb
 
 # Building, can take a while because of or-tools
 COPY build_env.sh /build_env.sh
